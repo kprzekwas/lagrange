@@ -8,23 +8,23 @@ from core.models import Frac
 def lagrange_multipers(lista, elemets_number: int):
     """główna funkcja obliczająca mnożniki Lagrangea"""
     x = sympy.var('x')
-    multiplier_list = []
+    multipliers_list = []
     for i in range(elemets_number):
-        list_l = []
+        multiplier_list = []
         for k in range(elemets_number):
             if k != i:
                 """Obliczanie każdego składnika mnożnika"""
                 fraction = Frac(x - lista[k].x, lista[i].x - lista[k].x)
-                list_l.append(fraction)
+                multiplier_list.append(fraction)
         multiplier_numerator = 1
         multiplier_denominator = 1
         """Składanie wszystkich mnożników"""
-        for mnoznik in list_l:
-            multiplier_numerator = multiplier_numerator * mnoznik.x
-            multiplier_denominator = multiplier_denominator * mnoznik.y
+        for multiplier in multiplier_list:
+            multiplier_numerator = multiplier_numerator * multiplier.x
+            multiplier_denominator = multiplier_denominator * multiplier.y
         multiplier = Frac(multiplier_numerator, multiplier_denominator)
-        multiplier_list.append(multiplier)
-    return multiplier_list
+        multipliers_list.append(multiplier)
+    return multipliers_list
 
 
 def lagrange(multipliers_list, knots_list):
